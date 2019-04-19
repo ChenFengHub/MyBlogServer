@@ -5,7 +5,7 @@ module.exports = {
   description: 'Learn Web development together',
   // 要部署的仓库名字
   base: '/',
-  dest: './docs/.vuepress/dist',
+  // dest: './docs/.vuepress/dist',
   head: [
     //图片放大的支持 begin
     [
@@ -48,7 +48,10 @@ module.exports = {
       {
         title: 'RabbitMQ',
         collapsable: true,
-        children: ['/blog/rabbitmq/rabbitmqbroker']
+        children: [
+          '/blog/rabbitmq/rabbitmqbroker',
+          '/blog/rabbitmq/rabbitmqclient'
+        ]
       },
       {
         title: 'MySQL', // 侧边栏名称

@@ -2,7 +2,7 @@
 
 ## RabbitMQ 简介
 
-### RabbitMQ 主要分成：broker 和 client。
+### RabbitMQ 主要分成：broker 和 client
 
 - broker：消息代理，即 RabbitMQ 的服务端，负责 RabbitMQ 的消息接收和分发。
 
@@ -16,7 +16,7 @@
 
 ## vhost 简介
 
-### vhost：虚拟主机。
+### vhost：虚拟主机
 
 - 默认虚拟主机:「/」
 
@@ -74,16 +74,14 @@
 ## 消息持久化
 
 - 实现消息持久化需要同时满足的条件： 3 个
-
   - 消息持久化：message 的 delivery mode 设置为 2。如此设置后，消息到达 queue 时才会被写入磁盘，否则仅写入内存。
   - exchange 的持久化：exchage 的 durable 设置为 true。这样当 Broker 服务重启时，exchange 不会丢失。
-  - queue 的持久化：queue 的 durable 设置为 true。这样当 Broker 服务重启时，queue 不会丢失。这时消息写入内存；当 message 的 delivery mode 设置为：2，消息写入磁盘。当确认消息被 consumer 消费并 ack 确认，msg 从磁盘删除。
-
+  - queue 的持久化：queue 的 durable 设置为 true。这样当 Broker 服务重启时，queue 不会丢失。这时消息写入内存；当 message 的 delivery mode 设置为：2，消息写入磁盘。当确认消息被 consumer 消费并 ack 确认，消息从磁盘删除。
 :::tip
 
-- RabbitMQ 默认是不进行持久化的。这样当服务器重启时，queue 会丢失，queue 中的自然也消息会丢失。
-- exchange 和 queue 的 durable 的值必须同时相同。否则会报错。即要么 exchange 和 queue 同时持久化，要么都不持久化。
+- RabbitMQ 默认是不进行持久化的。这样当服务器重启时，queue 会丢失，queue 中的消息自然也消息会丢失。
+- exchange 和 queue 的 durable 的值必须同时相同。否则会报错。exchange 和 queue 要么同时持久化，要么都不持久化。
   :::
-<!--
-<Valine></Valine> -->
+
+<!-- <Valine></Valine> -->
 [前端友情链接](https://itxiaohao.github.io)
