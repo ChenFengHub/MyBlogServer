@@ -18,9 +18,11 @@
 
 ### vhost：虚拟主机
 
-- 默认虚拟主机:「/」
+- 默认虚拟主机:「/」。
 
-- vhost 拥有自己的 exchange、queue 和 binding。一个虚拟机的 exchange 不能绑定给其他 vhost 中。
+- 一个 broker 可以有多个 vhost。
+
+- vhost 拥有自己的 exchange、queue 和 binding。一个虚拟机不能访问其他 vhost 的 exchange、binding、queue。
 
 - vhost 用作不同用户的权限分离。用户拥有对应的 vhost 权限，才能操作 vhost 内部的 exchange、queue 等元素。如下图：
 
@@ -40,11 +42,11 @@
 - 默认交换机：默认值为“”，空字符串。默认交换隐式绑定到每个队列，binding 等于队列名称。
 
   - 默认交换机无法创建。创建会报错。
-  - 队列无法显式绑定到默认交换机。queue 与默认交换机绑定会报错。
+  - 队列无法显式绑定到默认交换机。绑定会报错。
   - 队列无法显式取消绑定到默认交换机。
-  - 可以只创建队列来使用。队列默认会与默认交换机来绑定，这样则不需要创建 exchange 以及显式绑定 queue 和 exchange。
+  - 可以只创建队列来使用。队列默认会与默认交换机来绑定，这样则不需要创建 exchange 以及显式绑定 queue 和 exchange，即可往队列推送消息。
 
-- 其他交换机：exchange 要想能路由到队列，必须显示绑定，否则无法往对应的队列推送消息。
+- 其他交换机：默认交换机外的 exchange 要想能路由到队列，必须显示绑定，否则消息无法通过该 exchange 推送到队列。
 
 ### exchange 消息路由类型：3 种
 
@@ -74,14 +76,17 @@
 ## 消息持久化
 
 - 实现消息持久化需要同时满足的条件： 3 个
+
   - 消息持久化：message 的 delivery mode 设置为 2。如此设置后，消息到达 queue 时才会被写入磁盘，否则仅写入内存。
   - exchange 的持久化：exchage 的 durable 设置为 true。这样当 Broker 服务重启时，exchange 不会丢失。
   - queue 的持久化：queue 的 durable 设置为 true。这样当 Broker 服务重启时，queue 不会丢失。这时消息写入内存；当 message 的 delivery mode 设置为：2，消息写入磁盘。当确认消息被 consumer 消费并 ack 确认，消息从磁盘删除。
-:::tip
+    :::tip
 
-- RabbitMQ 默认是不进行持久化的。这样当服务器重启时，queue 会丢失，queue 中的消息自然也消息会丢失。
+- RabbitMQ queue 中存储的消息默认是不进行持久化的。这样当服务器重启时，queue 中的消息自然也会消息会丢失。
+- queue 和 exchange 本身默认是不进行持久化的，服务器重启，queue 和 exchange 会丢失。
 - exchange 和 queue 的 durable 的值必须同时相同。否则会报错。exchange 和 queue 要么同时持久化，要么都不持久化。
   :::
 
 <!-- <Valine></Valine> -->
+
 [前端友情链接](https://itxiaohao.github.io)

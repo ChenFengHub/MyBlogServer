@@ -50,7 +50,8 @@ module.exports = {
         collapsable: true,
         children: [
           '/blog/rabbitmq/rabbitmqbroker',
-          '/blog/rabbitmq/rabbitmqclient'
+          '/blog/rabbitmq/rabbitmqclient',
+          '/blog/rabbitmq/springboot'
         ]
       },
       {
