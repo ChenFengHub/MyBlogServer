@@ -21,7 +21,7 @@ spring:
         publisher-confirms: false
         // 默认：false-消息回调关闭（broker 调用回调函数，client 的回调函数不会被触发）。true-开启消息回调。
         publisher-returns: false
-        // 默认为false。true时，当 broker 没有 queue 能接收消息，会将消息返回给 producer。
+        // 默认为false。true 时，当 broker 没有 queue 能接收消息，会将消息返回给 producer。
         template:
         mandatory: false
         listener:
