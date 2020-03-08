@@ -1,8 +1,12 @@
+// config 目录下必须有 index.js，否则无法直接引入 config  下其他配置文件
+const { themeConf } = require('./config/')
 module.exports = {
+  // 引入 vuepress-theme-reco 插件
+  // theme:'reco',
   //网站标题
   title: `ChenFeng's Blog `,
   // 主页描述
-  description: 'Learn Web development together',
+  description: 'Java 架构师必备',
   // 要部署的仓库名字
   base: '/',
   // dest: './docs/.vuepress/dist',
@@ -35,40 +39,7 @@ module.exports = {
     ['link', { rel: 'icon', href: '/home.jpg' }]
   ],
   // 主题配置
-  themeConfig: {
-    // 导航配置
-    nav: [
-      {
-        text: '博客',
-        // link: '/blog/',
-        items: [{ text: '笔记', link: '/blog/rabbitmq/rabbitmqbroker' }]
-      }
-    ],
-    sidebar: [
-      {
-        title: 'RabbitMQ',
-        collapsable: true,
-        children: [
-          '/blog/rabbitmq/rabbitmqbroker',
-          '/blog/rabbitmq/rabbitmqclient',
-          '/blog/rabbitmq/springboot'
-        ]
-      },
-      {
-        title: 'MySQL', // 侧边栏名称
-        collapsable: true, // 可折叠
-        children: [
-          '/blog/mysql/a树演化', // md 文件地址
-          '/blog/mysql/b索引浅谈', // md 文件地址
-          '/blog/mysql/c分库分表' // md 文件地址
-        ]
-      }
-    ],
-    // plugins: ['@vuepress/active-header-links', '@vuepress/back-to-top'],
-    editLinkText: '编辑此页',
-    lastUpdated: '上次更新',
-    sidebarDepth: 1
-  },
+  themeConfig: themeConf,
   plugins: [
     '@vuepress/active-header-links',
     ['@vuepress/plugin-back-to-top', true],
