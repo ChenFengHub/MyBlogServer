@@ -157,9 +157,9 @@
   ```
 
 ## GitHub 项目 demo
-::: tip
-整个 demo GitHub 地址：git@github.com:ChenFengHub/springcloud-demo.git
-:::
+
+* [整个 demo GitHub 地址](https://github.com/ChenFengHub/springcloud-demo )
+
 * 项目运行测试：需要先启动上节介绍的注册中心和用户服务，然后再启动 ribbon 服务，调用 http://8101/ribbon/test 进行测试
 ![启动测试过程](./image/ribbon-start.png)
 * [手写 Ribbon 例子的 GitHub 地址](https://github.com/ChenFengHub/springcloud-demo/tree/master/ribbon-demo)

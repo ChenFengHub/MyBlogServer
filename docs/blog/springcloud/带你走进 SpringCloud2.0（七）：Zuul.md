@@ -182,8 +182,7 @@
 [](./image/zuul-portal.png)
 
 ## GitHub 项目 demo
-::: tip
-整个 demo GitHub 地址：git@github.com:ChenFengHub/springcloud-demo.git
-:::
+
+* [整个 demo GitHub 地址](https://github.com/ChenFengHub/springcloud-demo )
 
 * [Zuul 例子的 GitHub 地址](https://github.com/ChenFengHub/springcloud-demo/tree/master/zuul-demo)

@@ -103,9 +103,8 @@
     }
     ```
 ## GitHub 项目 demo
-::: tip
-整个 demo GitHub 地址：git@github.com:ChenFengHub/springcloud-demo.git
-:::
+
+* [整个 demo GitHub 地址](https://github.com/ChenFengHub/springcloud-demo )
 
 * 项目运行测试：测试 Feign 接口调用其他服务的接口的功能。
   * 先启动注册服务

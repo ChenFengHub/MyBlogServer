@@ -2,7 +2,7 @@
 const { themeConf } = require('./config/')
 module.exports = {
   // 引入 vuepress-theme-reco 插件
-  // theme:'reco',
+  theme:'reco',
   //网站标题
   title: `ChenFeng's Blog `,
   // 主页描述

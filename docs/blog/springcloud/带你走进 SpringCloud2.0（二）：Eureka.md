@@ -151,9 +151,9 @@
 * 启动类添加注解，服务开启 Eureka Client 功能：@EnableEurekaClient
 
 ## GitHub 项目 demo
-::: tip
-整个 demo GitHub 地址：git@github.com:ChenFengHub/springcloud-demo.git
-:::
+
+* [整个 demo GitHub 地址](https://github.com/ChenFengHub/springcloud-demo )
+
 * 项目运行测试：将三个注册服务启动，然后启动用户服务；进入注册服务管理端：http://localhost:8000，查看注册信息
   * 启动服务
   ![](./image/eureka-start.png)

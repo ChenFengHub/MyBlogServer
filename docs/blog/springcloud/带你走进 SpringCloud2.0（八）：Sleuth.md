@@ -213,8 +213,7 @@ member-server 生产者|67421900df06a518|a5e06cd163763c2b|769fa17617dcbb87
 
 
 ## GitHub 项目 demo
-::: tip
-整个 demo GitHub 地址：git@github.com:ChenFengHub/springcloud-demo.git
-:::
+
+* [整个 demo GitHub 地址](https://github.com/ChenFengHub/springcloud-demo )
 
 * [Sleuth 例子的 GitHub 地址](https://github.com/ChenFengHub/springcloud-demo/tree/master/sleuth-demo)

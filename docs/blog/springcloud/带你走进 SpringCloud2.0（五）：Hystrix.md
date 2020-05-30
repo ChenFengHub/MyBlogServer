@@ -132,9 +132,8 @@
   ```
 
 ## GitHub 项目 demo
-::: tip
-整个 demo GitHub 地址：git@github.com:ChenFengHub/springcloud-demo.git
-:::
+
+* [整个 demo GitHub 地址](https://github.com/ChenFengHub/springcloud-demo )
 
 * 项目运行测试：测试 Hystrix 熔断、降级机制。
   * 先启动注册服务
