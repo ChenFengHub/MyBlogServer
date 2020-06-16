@@ -1,1 +1,1 @@
-# vuepress 博客配置
+### reco_luan's blog [website](https://www.recoluan.com)
