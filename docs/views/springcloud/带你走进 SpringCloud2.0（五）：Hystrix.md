@@ -64,37 +64,37 @@ categories:
 * application.yml 配置
   ``` .yml
   hystrix:
-  threadpool:
-    default:
-      ### 使用线程隔离策略的方法，创建线程池，默认：10。
-      coreSize: 10
-      ### 排队请求数阈值，默认：5。等请求并发数大于线程池线程数，前 5 条请求进入缓存处于等待状态；超过的请求直接返回拒绝方法报错
-      queueSizeRejectionThreshold: 5
-  command:
-    default:
-      metrics:
-        rollingStats:
-          ### 窗口时间，默认：10000ms，即 10s。timeInMilliseconds/numBuckets，比如：10000ms/10=10000ms，
-          ### 每隔 1s 就会统计这 1s 内请求：success、failure、timeout、rejection 请求的数量
-          timeInMilliseconds: 10000
-          ### 桶的数量。默认：10。设置 numBuckets 的值时，保证 timeInMilliseconds % numBuckets == 0 即可
-          numBuckets: 10
-      circuitBreaker:
-        ### 断路持续时间。默认：5000ms，即 5s
-        sleepWindowInMilliseconds: 15000
-        ### 窗口时间内允许接口调用报错的请求数，默认：20 个。在一个窗口时间内，一个接口调用报错次数达到 20，就开启断路器。熔断针对接口，不会触发其他接口的熔断
-        requestVolumeThreshold: 5
-        ### 窗口时间内允许接口调用报错占总请求数的百分比。默认：50，即 50%。每隔 bucket 内都会统计，当窗口时间内 bucket
-        ### 累积：非成功请求数/总请求数 >= 50%，则会开启断路器。熔断针对接口，不会触发其他接口的熔断
-        errorThresholdPercentage: 50
-      execution:
-        isolation:
-          thread:
-            ### Hystrix 接口执行超时时间，单位：ms，默认值 1s。调用接口超过超时时间，触发熔断
-            timeoutInMilliseconds: 1000
-          ### 最大并发请求，默认为：10 条。当该接口已经接收 10 条请求在处理，后续请求触发熔断
-          semaphore:
-            maxConcurrentRequests: 20
+    threadpool:
+      default:
+        ### 使用线程隔离策略的方法，创建线程池，默认：10。
+        coreSize: 10
+        ### 排队请求数阈值，默认：5。等请求并发数大于线程池线程数，前 5 条请求进入缓存处于等待状态；超过的请求直接返回拒绝方法报错
+        queueSizeRejectionThreshold: 5
+    command:
+      default:
+        metrics:
+          rollingStats:
+            ### 窗口时间，默认：10000ms，即 10s。timeInMilliseconds/numBuckets，比如：10000ms/10=10000ms，
+            ### 每隔 1s 就会统计这 1s 内请求：success、failure、timeout、rejection 请求的数量
+            timeInMilliseconds: 10000
+            ### 桶的数量。默认：10。设置 numBuckets 的值时，保证 timeInMilliseconds % numBuckets == 0 即可
+            numBuckets: 10
+        circuitBreaker:
+          ### 断路持续时间。默认：5000ms，即 5s
+          sleepWindowInMilliseconds: 15000
+          ### 窗口时间内允许接口调用报错的请求数，默认：20 个。在一个窗口时间内，一个接口调用报错次数达到 20，就开启断路器。熔断针对接口，不会触发其他接口的熔断
+          requestVolumeThreshold: 5
+          ### 窗口时间内允许接口调用报错占总请求数的百分比。默认：50，即 50%。每隔 bucket 内都会统计，当窗口时间内 bucket
+          ### 累积：非成功请求数/总请求数 >= 50%，则会开启断路器。熔断针对接口，不会触发其他接口的熔断
+          errorThresholdPercentage: 50
+        execution:
+          isolation:
+            thread:
+              ### Hystrix 接口执行超时时间，单位：ms，默认值 1s。调用接口超过超时时间，触发熔断
+              timeoutInMilliseconds: 1000
+            ### 最大并发请求，默认为：10 条。当该接口已经接收 10 条请求在处理，后续请求触发熔断
+            semaphore:
+              maxConcurrentRequests: 20
   ```
 * 启动类添加注解，服务开启 Hystrix 框架的功能：@EnableHystrix
 
