@@ -9,7 +9,7 @@ categories:
 ::: tip 背景
 * 在微服务发布部署过程中，子服务的数目很多，服务需要进行集群。服务配置使用配置文件存储，那样每次配置信息的修改，服务需要重新发布部署，非常繁琐。
 * 分布式配置中心：微服务中较常变化的配置，放到分布式配置中心。当配置修改，分布式配置中心会将修改的配置推送给服务，服务就能实现配置的实时修改生效，服务不需要重新发布部署。
-* Apollo：SpringCloud 提供的分布式配置中心 Cloud，没有管理端，使用起来很不人性化。所以我们这里改为整合 Apollo。
+* Apollo：SpringCloud 提供的分布式配置中心 Config，没有管理端，使用起来很不人性化。所以我们这里改为整合 Apollo,实际生产中 SpringCloud 也一般是整合 Apollo。
   * Apollo 是携程开发的分布式配置中心。
 :::
 
@@ -19,18 +19,19 @@ categories:
 * 分布式配置信息持久化存储化仓库。常用的有：mysql、git。
 * 分布式配置管理端。管理配置信息，进行信息的添加、编辑和修改。
 * ConfigServer：保存最新配置信息。
-* ClientServer：服务整合 Client 后，就认为是 ClientServer。能够通过 ConfigServer 获得变更的配置，并更新到服务对应的内存。
+* Client：需要拉取使用分布式配置的服务，我们就称为 Client。Client 需要整合 Apollo 的 Client 包，实现接收推送的配置信息或拉取配置信息的功能。
 
 ### 分布式配置中心的原理
 * 配置管理：通过管理端，对仓库中配置信息进行操作。
 * 配置消息推送：当持久化仓库中存储的配置有变更，通过消息推送机制，将修改的配置推送给 ConfigServer，ConfigServer 中始终保存着最新的配置信息。
-* ClientServer 获得 ConfigServer 中修改的配置。Client 获得变更配置的常用方案：2 种
+* Client 获得 ConfigServer 中修改的配置。Client 获得变更配置的常用方案：2 种
   * Client 能够与 ConfigServer 保持长连接，ConfigServer 将变更的配置实时推送给 Client。
   * Client 定时拉取 ConfigServer 中的最新配置。
 
 ## Apollo
 
-::: tip Apollo 分布式配置中心，功能强大的一个中间件
+::: tip Apollo 分布式配置中心简介
+* 它是一个功能强大的中间件。
 * 它提供 4 种维度管理配置：application、environment、cluster、naspace。
 * 支持发布审核：配置修改，不会生效；需要点击发布，修改的配置才会生效，推送给服务。
 * 配置实时生效：配置修改，1s 以内都会推送到服务。
@@ -42,13 +43,13 @@ categories:
 ### Apollo 组成 7 个
 * 组成：ConfigService、AdminService、Client、Portal、MetaService、Eureka 和 MySQL
 * ConfigService
-  * 提供功能：配置的读取、推送等功能
+  * 提供功能：配置的主动拉取、推送等功能。
   * 服务对象：Client。
 * AdminService
-  * 提供的功能：提供配置的修改、发布等功能，发布消息。会将消息推送给 ConfigService，或者由其他推送消息给 ConfigService
-  * 服务对象：Portal
+  * 提供的功能：提供配置的修改、发布等功能。AdminService 发布消息时，会通知 ConfigService。
+  * 服务对象：Portal。
 * Client
-  * 提供的功能：定时拉取配置和接收配置修改通知等功能。SpringCloud 需要整合此，与 ConfigService 长连接。
+  * 提供的功能：定时拉取配置和接收配置修改通知等功能。SpringCloud 需要整合此，与 ConfigService 长连接，从而实现实时更新配置信息。
   * 与 ConfigService 连接。Client 先要从 MetaService 获取 ConfigService 服务列表，根据负载均衡算法，选择一个 ConfigService 服务通讯。
 * Portal
   * 提供的功能：Apollo 的前端管理端，可以进行项目创建，配置修改，发布等功能。
@@ -59,7 +60,7 @@ categories:
 * MetaService
   * 提供的功能：对外提供服务发现接口，给其他平台调用。获得 ConfigService  和 AdminService 服务信息列表；这样 Client 和 Portal 不需要注册到 Eureka，也能获取到服务信息列表。
     * MetaService 也注册到 Eureka，通过 DiscoveryClient 获取服务信息列表。
-  * MetaService 实际业整合在 ConfigService 中，他们在同一个 JVM 中运行。Portal 通过连接 ConfigService 中 MetaService 获取 AdminService 服务列表信息。
+  * MetaService 实际一般整合在 ConfigService 中，他们在同一个 JVM 中运行。Portal 通过连接 ConfigService 中 MetaService 获取 AdminService 服务列表信息。
 * MySQL
   * 提供功能：提供配置等信息的持久化存储。
 
@@ -72,10 +73,10 @@ categories:
   * ConfigService 默认会与 Client 保持 60s 的长连接。
     * 当 60s 内有配置更新，ConfigService 会通知客户端，将有配置变化的 namespace 告知 Client，Client 根据 namespace 拉取最新配置。
     * 当 60s 内没有配置更新，ConfigService 会给 Client 发送一个 304 状态码的消息给 Client，然后连接中断。
-    * Client 只要接收到服务端的请求，都会重新发起连接。如果连接已经中断，就重新建立长连接。
-* 配置发布和拉取
-  * 配置发布：Portal 操作配置并发布后，ConfigService 会收到消息通知，更新配置，并将变更的配置推送给 Client。
-  * 配置拉取：为了防止网络抖动，导致 Client 配置不是最新的问题，Client 会通过定时拉取 ConfigService 的配置，保证配置最终是一致的.
+    * Client 只要接收到服务端的请求（不管是通知拉取配置的请求还是报错请求），都会重新建立长连接。
+* 配置信息发布和拉取
+  * 配置信息发布：Portal 操作配置信息并发布后，ConfigService 会收到消息通知，更新配置，并将变更的配置推送给 Client。
+  * 配置拉取：为了防止网络抖动，导致 Client 配置信息不是最新的问题，Client 会通过定时拉取 ConfigService 的配置，保证配置最终是一致的。
 
 ## Apollo 平台搭建
 
@@ -157,7 +158,7 @@ unzip -o apollo-portal-1.6.1-github.zip -d  /thor/lib/apollo/apollo-portal-1.6.1
   spring.datasource.username = user
   spring.datasource.password = password
   ```
-* 配置 portal 连接多套 configservice 和 adminservice。portal 需要同 configservice 的 metaservice 获取 adminService 服务列表信息，再跟 adminService 通信，所以 portal 设置 configservice 连接信息即可。
+* 配置 portal 连接多套 configservice 和 adminservice。portal 需要通过 configservice 的 metaservice 获取 adminService 服务列表信息，再跟 adminService 通信，所以 portal 设置 configservice 连接信息即可。
   ```command
   # 进入配置文件
   cd /thor/lib/apollo/apollo-portal-1.6.1-github/config
@@ -218,7 +219,7 @@ unzip -o apollo-portal-1.6.1-github.zip -d  /thor/lib/apollo/apollo-portal-1.6.1
     ### portal 中新建 Application 的 AppId
     id: test_1
   apollo:
-    ### configserver 的地址
+    ### configserver 的地址。该地址在 IDEA 开发工具对应服务器的 VM OPTION 中配置实际的地址即可
     meta: http://{configserver.host}:8080
   ```
 

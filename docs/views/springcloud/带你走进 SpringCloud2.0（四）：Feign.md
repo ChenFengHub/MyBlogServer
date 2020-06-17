@@ -52,9 +52,9 @@ categories:
   @Component
   public class UserFallback implements UserServiceFeign {
       @Override
-      public String getUserInfo() {
+      public String getUserInfo(UserSearchParam param) {
           System.out.println("人员信息不存在！");
-          return null;
+          return "人员信息不存在！";
       }
   }
   ```
@@ -87,10 +87,40 @@ categories:
 * Feign 声明式接口的使用
   * UserServiceFeign 继承接口类 IUserService。设置降级类为：UserFallback。
     ``` Java
-    public interface IUserService {
-        @RequestMapping(value = "/user/get")
-        String getUserInfo();
+    /** 接口所使用的参数对象 **/
+    public class UserSearchParam implements Serializable {
+
+        private static final long serialVersionUID = 8454365467827854231L;
+
+        /** 用户昵称查询条件 **/
+        private String nickName;
+
+        /** 电话查询条件 **/
+        private String telephone;
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
+        public String getTelephone() {
+            return telephone;
+        }
+
+        public void setTelephone(String telephone) {
+            this.telephone = telephone;
+        }
     }
+
+    /** 将对外开放的接口，定位为 interface **/
+    public interface IUserService {
+        @PostMapping(value = "/user/get")
+        String getUserInfo(@RequestBody UserSearchParam param);
+    }
+
     /** value 是调用接口的服务名称 **/
     @FeignClient(value = "user-server", fallback = UserFallback.class)
     public interface UserServiceFeign extends IUserService {
@@ -101,11 +131,11 @@ categories:
     ``` Java
     @Component
     public class UserFallback implements UserServiceFeign {
-      @Override
-      public String getUserInfo() {
-        System.out.println("人员信息不存在！");
-        return null;
-      }
+        @Override
+        public String getUserInfo(UserSearchParam param) {
+            System.out.println("人员信息不存在！");
+            return "人员信息不存在！";
+        }
     }
     ```
 ## GitHub 项目 demo

@@ -42,7 +42,8 @@ categories:
 
 ## 纯手写 Ribbon
 ::: tip
-  SpringCloud 中通过 DiscoveryClient 对象获取注册的服务信息列表
+* SpringCloud 中通过 DiscoveryClient 对象获取注册的服务信息列表。
+* SpringCloud 通过 Feign 或 RestTemplate 调用接口时，底层默认整合 Ribbon 实现调用接口，所以我们使用 SpringCloud 调用其他微服务接口，不需要特意整合 Ribbon。这里纯手写 Ribbon 只是为了方便理解 Ribbon 的实现原理。
 :::
 
 * maven 依赖
