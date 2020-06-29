@@ -43,7 +43,8 @@ categories:
 ## SpringCloud 简介
 
 * SpringCloud 是基于 SpringBoot 开发的微服务框架。
-  * SpringBoot 是基于 SpirngMVC 开发的框架，完全去除 XML 配置，采用注解方法实现各种配置；由于 SpringBoot 内置 Tomcat 服务器，仅通过 java -jar Xxx.jar，就可以快速启动项目，而不需要额外部署 Tomcat 服务器作为容器启动项目。
+  * SpringBoot 是基于 SpirngMVC + Spring 注解式启动开发的框架，完全去除 XML 配置，采用注解方法实现各种配置，属于快速入门框架，完全有可能半小时入门；
+  * SpringBoot 由于内置了 Tomcat 服务器，仅通过 java -jar Xxx.jar，就可以快速启动项目，而不需要额外部署 Tomcat 服务器作为容器启动项目。
   * 由于 SpringCloud 的流行，阿里对 SpringCloud 进行二次开发，推出了 SpringCloudAlibaba 框架，有兴趣的朋友可以自行去研究。
 
 * SpringCloud 提供了全家桶解决方案。其整合了各种组件来解决微服务中的各种常见问题，所以相对于其他微服务框架，比如 Dubbo 更有优势。SpringCloud 主要实现如下功能：
