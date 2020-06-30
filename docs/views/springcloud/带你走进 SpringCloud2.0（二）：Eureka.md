@@ -163,6 +163,8 @@ categories:
 * 项目运行测试：将三个注册服务启动，然后启动用户服务；进入注册服务管理端：http://localhost:8000，查看注册信息
   * 启动服务
   ![](./image/eureka-start.png)
-  * 进入注册服务管理端
+
+	* 进入注册服务管理端
   ![](./image/eureka-manager.png)
+
 * [注册中心和用户服务例子的 Github 地址](https://github.com/ChenFengHub/springcloud-demo/tree/master/eureka-demo)

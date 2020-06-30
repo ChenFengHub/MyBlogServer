@@ -183,7 +183,7 @@ unzip -o apollo-portal-1.6.1-github.zip -d  /thor/lib/apollo/apollo-portal-1.6.1
 ### 创建项目应用
 * 在 Apollo Portal 管理端里创建项目，专门用于配置对应服务的配置。
 * 我们这里为 apollo-demo 服务创建 test_1 项目
-  ![](./image/apollo-create-app.png)
+	![](./image/apollo-create-app.png)
 
 ### client 打包
 * client 需要通过源码打包到我们本地仓库，引用本地仓库中对应的 Maven 包，即可整合 client。

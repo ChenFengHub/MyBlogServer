@@ -144,14 +144,21 @@ categories:
 
 * 项目运行测试：测试 Hystrix 熔断、降级机制。
   * 先启动注册服务
+
   ![](./image/feign-eureka-start.png)
-  * 启动整合 Hystrix 的服务
-  ![](./image/hystrix-demo.png)
-  * 调用接口测试
+
+	* 启动整合 Hystrix 的服务
+
+	![](./image/hystrix-demo.png)
+
+	* 调用接口测试
     * 调用 localhost:8300/member/delete/1，传入参数为：1，接口报错；调用次数为窗口时间内触发熔断的次数。
-    ![](./image/hystrix-fail.png)
+
+			![](./image/hystrix-fail.png)
+
     * 调用 localhost:8300/member/delete/2，传入参数不为：1，接口不会报错；发现熔断器启动，接口都是返回降级方法的返回结果；当熔断器持续时间结束，接口能够正常访问。
-    ![](./image/hystrix-reject.png)
+
+		![](./image/hystrix-reject.png)
     ![](./image/hystrix-success.png)
 
 * [Hystrix 例子的 GitHub 地址](https://github.com/ChenFengHub/springcloud-demo/tree/master/hystrix-demo)
