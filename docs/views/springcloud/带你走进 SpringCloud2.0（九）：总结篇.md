@@ -44,6 +44,10 @@ categories:
   ![](./image/summary/project-struct.png)
 
 * 项目运行测试
+	* Apollo 中路由信息先配置好
+
+	![](./image/summary/apollo-config.png)
+
   * 先启动注册服务
 
 	![](./image/summary/eureka_start.png)
@@ -56,5 +60,13 @@ categories:
 
 	![](./image/summary/basic_acs_start.png)
 
+	* 测试生成记录接口：localhost:8500/api-acs/record/generate
+
+	![](./image/summary/test.png)
+
+	* 在 zipkin 中查看调用链
+
+	![](./image/summary/sleuth1.png)
+	![](./image/summary/sleuth2.png)
 
 * [学校信息管理平台例子的 GitHub 地址](https://github.com/ChenFengHub/springcloud-demo/tree/master/school-platform)

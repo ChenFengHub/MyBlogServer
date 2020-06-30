@@ -191,4 +191,19 @@ categories:
 
 * [整个 demo GitHub 地址](https://github.com/ChenFengHub/springcloud-demo )
 
+* 项目运行测试：通过修改 portal 中网路路由配置信息，控制路由的添加和删减。
+  * 先启动注册服务
+
+	![](./image/feign-eureka-start.png)
+
+	* 启动网关服务、会员服务、订单服务
+
+	![](./image/zuul-start.png)
+
+	* 登录 Portal 管理端：http://${portal.ip}:8070,对路由信息进行操作。
+  * 比如增加和删减订单服务路由，然后通过网关调用订单服务接口，判断路由是否根据 Portal 中配置实时更新。测试接口：
+    ``` http
+    localhost:8500/api-order/order/get
+    ```
+
 * [Zuul 例子的 GitHub 地址](https://github.com/ChenFengHub/springcloud-demo/tree/master/zuul-demo)
